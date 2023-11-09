@@ -17,7 +17,6 @@ aws lambda invoke --function-name YourFunctionName --payload file://payload.json
 
 ```
 
-
 ## Bash script
 ```
 #!/bin/bash
@@ -30,6 +29,10 @@ fi
 
 lambda_name=$1
 payload_file=$2
+
+
+# Print the Lambda function name
+echo "Invoking Lambda function: $lambda_name"
 
 # Invoke the Lambda function
 aws lambda invoke --function-name "$lambda_name" --payload "file://$payload_file" --cli-binary-format raw-in-base64-out --log-type Tail --query 'LogResult' --output text | base64 --decode
