@@ -12,4 +12,7 @@ aws lambda invoke --function-name YourFunctionName --payload '{"key1":"value1", 
 ## Invoke with file payload
 ```
 aws lambda invoke --function-name YourFunctionName --payload file://path/to/your/payload.json --cli-binary-format raw-in-base64-out --log-type Tail --query 'LogResult' --output text | base64 -d
+
+aws lambda invoke --function-name YourFunctionName --payload file://payload.json --cli-binary-format raw-in-base64-out --log-type Tail --query 'LogResult' --output text | base64 -d
+
 ```
