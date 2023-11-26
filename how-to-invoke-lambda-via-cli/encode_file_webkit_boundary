@@ -1,0 +1,24 @@
+import urllib3
+
+def encode_csv_as_multipart(file_path, field_name='file', custom_boundary='WebKitFormBoundary'):
+    # Open the CSV file and read its content
+    with open(file_path, 'r') as file:
+        file_data = file.read()
+
+    # Create a dictionary with the file data
+    files = {field_name: ('file.csv', file_data, 'text/csv')}
+
+    # Encode the file as multipart form data with a custom boundary
+    encoder = urllib3.encode_multipart_formdata(files, boundary=custom_boundary)
+    
+    # Return the Content-Type header and the encoded request body
+    return encoder.content_type, encoder.request_body
+
+if __name__ == "__main__":
+    csv_file_path = 'path/to/your/file.csv'
+    custom_boundary = 'WebKitFormBoundary'  # You can set your custom boundary here
+    content_type, request_body = encode_csv_as_multipart(csv_file_path, custom_boundary=custom_boundary)
+
+    # Print the Content-Type header and the encoded request body
+    print("Content-Type:", content_type)
+    print("\nRequest Body:", request_body.decode('utf-8'))
