@@ -21,3 +21,10 @@ if __name__ == "__main__":
     # Print the Content-Type header and the encoded request body
     print("Content-Type:", content_type)
     print("\nRequest Body:", request_body.decode('utf-8'))
+
+
+------WebKitFormBoundaryRSqJpulfCtjoOsXB
+Content-Disposition: form-data; name="file"; filename="abc.csv"
+Content-Type: text/csv
+
+------WebKitFormBoundaryRSqJpulfCtjoOsXB--
