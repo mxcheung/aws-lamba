@@ -9,3 +9,8 @@ You can trigger the polling Lambda function periodically or based on your specif
 Make sure to replace 'your-s3-bucket-name' with the actual name of your S3 bucket.
 
 This example demonstrates a simple claim check pattern using AWS Lambda and S3. Depending on your use case and requirements, you might need to adjust and enhance the implementation.
+
+
+# Hands-on Lab: Using an Amazon S3 trigger to invoke a Lambda function and persist on DynamoDB
+https://medium.com/aws-lambda-serverless-developer-guide-with-hands/invoke-aws-lambda-asynchronously-using-amazon-s3-to-trigger-lambda-6c1dee9de7a8
+
