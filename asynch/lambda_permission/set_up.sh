@@ -45,7 +45,7 @@ aws lambda add-permission --function-name $LAMBDA_FUNCTION_2_NAME \
 wait_for_policy_update() {
     local retries=5
     local wait_time=5  # Wait time between retries in seconds
-    local statement_id="AllowInvocation"
+    local statement_id="AllowInvokeFromLambdaFunction1"
 
     for ((i=0; i<retries; i++)); do
         POLICY=$(aws lambda get-policy --function-name $LAMBDA_FUNCTION_2_NAME --query 'Policy' --output text 2>/dev/null)
