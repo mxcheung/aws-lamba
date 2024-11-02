@@ -39,7 +39,7 @@ EOF
 echo "Invoking LambdaFunction1..."
 aws lambda invoke \
     --function-name "$LAMBDA_FUNCTION_NAME" \
-    --payload file://$TEST_PAYLOAD \
+    --payload fileb://$TEST_PAYLOAD \
     --region $REGION \
     $OUTPUT_FILE
 
