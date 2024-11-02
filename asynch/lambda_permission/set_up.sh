@@ -16,21 +16,14 @@ if [[ -z "$AWS_ACCOUNT_ID" ]]; then
     exit 1
 fi
 
-# Create the invoke_policy.json with dynamic values
-cat <<EOF > invoke_policy.json
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": "lambda:InvokeFunction",
-            "Resource": "arn:aws:lambda:$REGION:$AWS_ACCOUNT_ID:function:LambdaFunction2"
-        }
-    ]
-}
-EOF
+chmod +x generate_invoke_policy.sh
 
-echo "Policy file 'invoke_policy.json' created successfully with region $REGION and account ID $AWS_ACCOUNT_ID."
+./generate_invoke_policy.sh
+
+aws iam put-role-policy \
+    --role-name LambdaInvokeRole1 \
+    --policy-name InvokeLambdaFunction2Policy \
+    --policy-document file://invoke_policy.json
 
 
 aws lambda add-permission --function-name $LAMBDA_FUNCTION_2_NAME \
