@@ -1,15 +1,15 @@
 #!/bin/bash
 
-cd /home/ec2-user/aws-s3/presign_url/user_credentials
+cd /home/ec2-user/aws-lamba/asynch/user_credentials
 . ./set_up.sh
 
-cd /home/ec2-user/aws-s3/presign_url/iam
+cd /home/ec2-user/aws-lamba/asynch/iam
 . ./set_up.sh
 
-cd /home/ec2-user/aws-s3/presign_url/lambda_1
+cd /home/ec2-user/aws-lamba/asynch/lambda_1
 . ./set_up.sh
 
-cd /home/ec2-user/aws-s3/presign_url/lambda_2
+cd /home/ec2-user/aws-lamba/asynch/lambda_2
 . ./set_up.sh
 
 
