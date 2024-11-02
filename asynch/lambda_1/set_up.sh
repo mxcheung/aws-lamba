@@ -2,6 +2,7 @@
 
 export LAMBDA_FUNCTION_NAME="LambdaFunction1"
 export LAMBDA_ROLE_NAME="LambdaInvokeRole1"
+export LAMBDA_FUNCTION_2_NAME="LambdaFunction2"
 
 # Variables
 REGION="us-east-1"                                  # Replace with your AWS region
@@ -20,5 +21,6 @@ aws lambda create-function \
     --zip-file fileb://function.zip \
     --handler lambda_function.lambda_handler \
     --runtime python3.9 \
-    --role $LAMBDA_ROLE_ARN \
+    --role $LAMBDA_ROLE_ARN 
+    --environment Variables="{LAMBDA_FUNCTION_2_NAME=$LAMBDA_FUNCTION_2_NAME}")
 
