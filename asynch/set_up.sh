@@ -12,4 +12,5 @@ cd /home/ec2-user/aws-lamba/asynch/lambda_1
 cd /home/ec2-user/aws-lamba/asynch/lambda_2
 . ./set_up.sh
 
-
+cd /home/ec2-user/aws-lamba/asynch/test_lambda
+. ./set_up.sh
