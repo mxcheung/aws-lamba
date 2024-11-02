@@ -21,5 +21,5 @@ aws lambda create-function \
     --handler lambda_function.lambda_handler \
     --runtime python3.9 \
     --role $LAMBDA_ROLE_ARN \
-    --timeout 120 \  # Timeout set to 120 seconds (2 minutes)
+    --timeout 120   # Timeout set to 120 seconds (2 minutes)
 
