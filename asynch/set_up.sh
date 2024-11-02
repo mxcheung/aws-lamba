@@ -1,19 +1,21 @@
 #!/bin/bash
 
-cd /home/ec2-user/aws-lamba/asynch/user_credentials
+export USER_HOME="/home/ec2-user/aws-lamba/asynch"
+
+cd $USER_HOME/user_credentials
 . ./set_up.sh
 
-cd /home/ec2-user/aws-lamba/asynch/iam
+cd $USER_HOME/iam
 . ./set_up.sh
 
-cd /home/ec2-user/aws-lamba/asynch/lambda_1
+cd $USER_HOME/lambda_1
 . ./set_up.sh
 
-cd /home/ec2-user/aws-lamba/asynch/lambda_2
+cd $USER_HOME/lambda_2
 . ./set_up.sh
 
-cd /home/ec2-user/aws-lamba/asynch/lambda_permission
+cd $USER_HOME/lambda_permission
 . ./set_up.sh
 
-cd /home/ec2-user/aws-lamba/asynch/test_lambda
+cd $USER_HOME/test_lambda
 . ./set_up.sh
