@@ -6,6 +6,14 @@ export LAMBDA_FUNCTION_2_NAME="LambdaFunction2"
 export LAMBDA_1_ROLE_NAME="LambdaInvokeRole1"
 export LAMBDA_2_ROLE_NAME="LambdaInvokeRole2"
 
+
+aws lambda wait function-active --function-name $LAMBDA_FUNCTION_1_NAME
+echo " $LAMBDA_FUNCTION_1_NAME is active."
+
+aws lambda wait function-active --function-name $LAMBDA_FUNCTION_2_NAME
+echo " $LAMBDA_FUNCTION_2_NAME is active."
+
+
 # Set variables
 REGION="us-east-1"                                  # Replace with your desired AWS region
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text)
