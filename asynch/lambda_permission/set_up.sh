@@ -13,3 +13,10 @@ aws lambda add-permission \
   --action "lambda:InvokeFunction" \
   --source-arn arn:aws:s3:::$S3_BUCKET_NAME \
   --source-account $AWS_ACCOUNT_ID
+
+
+aws lambda add-permission --function-name LambdaFunction2 \
+    --statement-id AllowInvokeFromLambdaFunction1 \
+    --action lambda:InvokeFunction \
+    --principal lambda.amazonaws.com \
+    --source-arn arn:aws:lambda:<region>:<your_account_id>:function:LambdaFunction1
