@@ -1,15 +1,10 @@
 #!/bin/bash
 
-export LAMBDA_FUNCTION_NAME="S3PreSignUrlLambda"
-export LAMBDA_ROLE_NAME="LambdaS3ExecutionRole"
+export LAMBDA_FUNCTION_NAME="LambdaFunction1"
+export LAMBDA_ROLE_NAME="LambdaInvokeRole1"
 
 # Variables
-BASE_BUCKET_NAME="s3triggerlambdabucketqaisar"
 REGION="us-east-1"                                  # Replace with your AWS region
-
-# Get the existing S3 bucket name based on the base name
-export S3_BUCKET_NAME=$(aws s3api list-buckets --query "Buckets[?starts_with(Name, \`${BASE_BUCKET_NAME}\`)].Name" --output text)
-
 
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text)
 
@@ -26,4 +21,4 @@ aws lambda create-function \
     --handler lambda_function.lambda_handler \
     --runtime python3.9 \
     --role $LAMBDA_ROLE_ARN \
-    --environment Variables="{BUCKET_NAME=$S3_BUCKET_NAME}"
+
