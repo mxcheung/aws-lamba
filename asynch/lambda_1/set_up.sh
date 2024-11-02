@@ -24,3 +24,5 @@ LAMBDA_FUNCTION_ARN=$(aws lambda create-function \
     --role $LAMBDA_ROLE_ARN \
     --environment Variables="{LAMBDA_FUNCTION_2_NAME=$LAMBDA_FUNCTION_2_NAME}")
 
+echo $LAMBDA_FUNCTION_ARN
+
