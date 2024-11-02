@@ -24,11 +24,6 @@ if [[ -z "$AWS_ACCOUNT_ID" ]]; then
     exit 1
 fi
 
-chmod +x generate_invoke_policy.sh
-
-./generate_invoke_policy.sh
-
-
 aws lambda add-permission --function-name $LAMBDA_FUNCTION_2_NAME \
     --statement-id AllowInvokeFromLambdaFunction1 \
     --action lambda:InvokeFunction \
