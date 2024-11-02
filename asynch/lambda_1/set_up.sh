@@ -22,5 +22,6 @@ aws lambda create-function \
     --handler lambda_function.lambda_handler \
     --runtime python3.9 \
     --role $LAMBDA_ROLE_ARN 
-    --environment Variables="{LAMBDA_FUNCTION_2_NAME=$LAMBDA_FUNCTION_2_NAME}")
+    --environment Variables="{LAMBDA_FUNCTION_2_NAME=$LAMBDA_FUNCTION_2_NAME}"
+
 
