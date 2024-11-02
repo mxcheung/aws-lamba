@@ -20,6 +20,10 @@ chmod +x generate_invoke_policy.sh
 
 ./generate_invoke_policy.sh
 
+aws iam put-role-policy \
+    --role-name LambdaInvokeRole1 \
+    --policy-name InvokeLambdaFunction2Policy \
+    --policy-document file://invoke_policy.json
 
 
 aws lambda add-permission --function-name $LAMBDA_FUNCTION_2_NAME \
