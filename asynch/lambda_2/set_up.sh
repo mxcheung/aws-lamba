@@ -15,11 +15,13 @@ aws iam wait role-exists --role-name $LAMBDA_ROLE_NAME
 
 export LAMBDA_ROLE_ARN=$(aws iam get-role --role-name $LAMBDA_ROLE_NAME --query 'Role.Arn' --output text)
 
-aws lambda create-function \
+LAMBDA_FUNCTION_ARN=$(aws lambda create-function \
     --function-name $LAMBDA_FUNCTION_NAME \
     --zip-file fileb://function.zip \
     --handler lambda_function.lambda_handler \
     --runtime python3.9 \
     --role $LAMBDA_ROLE_ARN \
-    --timeout 120   # Timeout set to 120 seconds (2 minutes)
+    --timeout 120  ) # Timeout set to 120 seconds (2 minutes)
+
+echo $LAMBDA_FUNCTION_ARN
 
