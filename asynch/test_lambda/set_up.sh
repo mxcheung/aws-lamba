@@ -1,8 +1,13 @@
 #!/bin/bash
 
 # Set variables
-REGION="<your_region>"  # e.g., us-east-1
-ACCOUNT_ID="<your_account_id>"
+
+
+REGION="us-east-1"                                  # Replace with your AWS region
+
+AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text)
+
+
 LAMBDA_FUNCTION_NAME="LambdaFunction1"
 FILE_PATH="sample.txt"  # Path to your test file
 OUTPUT_FILE="output.json"
