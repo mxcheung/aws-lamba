@@ -19,7 +19,7 @@ if [[ ! -f "$FILE_PATH" ]]; then
     exit 1
 fi
 
-# Step 1: Base64 encode the file content
+# Step 1: Base64 encode the file content, removing any newline characters
 echo "Encoding file: $FILE_PATH"
 FILE_CONTENT_BASE64=$(base64 "$FILE_PATH" | tr -d '\n')
 
