@@ -14,7 +14,11 @@ class LambdaVpcAspect implements cdk.IAspect {
     if (node instanceof lambda.Function) {
 
 ```
+
 # References
+
 https://docs.aws.amazon.com/cdk/v2/guide/aspects.html
+
 https://aws.hashnode.com/the-power-of-aws-cdk-aspects
+
 https://github.com/aws/aws-cdk/issues/22473
