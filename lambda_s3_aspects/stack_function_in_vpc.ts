@@ -1,22 +1,30 @@
-# import
-from utilities.lambda_aspects import (
-    FunctionInVpc
-)
- 
-# In code
-# Create a list with private subnets to be used in the aspect to make all lambda's deployed in a VPC
-private_subnet1_id_token = ssm.StringParameter.value_for_string_parameter(self, '/gts-aacb/vpc/private-subnet-1-id')
-private_subnet2_id_token = ssm.StringParameter.value_for_string_parameter(self, '/gts-aacb/vpc/private-subnet-2-id')
-private_subnet3_id_token = ssm.StringParameter.value_for_string_parameter(self, '/gts-aacb/vpc/private-subnet-3-id')
-private_subnet_ids=[private_subnet1_id_token, private_subnet2_id_token, private_subnet3_id_token]
- 
-# Create a lambda Security Group where all lambdas are in
-lambdaSG = ec2.SecurityGroup(
-  self, 'LambdaSG',
-  vpc=vpc.vpc,
-  description="Lambda security group",
-  allow_all_outbound=True
-)
- 
-# End statement
-core.Aspects.of(self).add(FunctionInVPC(private_subnets=private_subnet_ids, security_group_id=lambdaSG.security_group_id))
+import * as cdk from 'aws-cdk-lib';
+import { aws_lambda as lambda, aws_iam as iam } from 'aws-cdk-lib';
+
+export class FunctionInVPC implements cdk.IAspect {
+  private readonly privateSubnets: string[];
+  private readonly securityGroupId: string;
+
+  constructor(privateSubnets: string[], securityGroupId: string) {
+    this.privateSubnets = privateSubnets;
+    this.securityGroupId = securityGroupId;
+  }
+
+  public visit(node: cdk.IConstruct): void {
+    if (node instanceof iam.Role) {
+      const cfnRole = node.node.tryFindChild('Resource') as iam.CfnRole;
+      const metadata = cfnRole?.getMetadata('aws:cdk:path');
+      
+      if (metadata && metadata.includes('BucketNotificationsHandler')) {
+        node.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSLambdaVPCAccessExecutionRole'));
+      }
+    }
+
+    if (node instanceof cdk.CfnResource) {
+      if (node.cfnResourceType === 'AWS::Lambda::Function') {
+        node.addPropertyOverride('VpcConfig.SecurityGroupIds', [this.securityGroupId]);
+        node.addPropertyOverride('VpcConfig.SubnetIds', this.privateSubnets);
+      }
+    }
+  }
+}
