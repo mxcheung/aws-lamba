@@ -1,30 +1,23 @@
-import * as cdk from 'aws-cdk-lib';
-import { aws_lambda as lambda, aws_iam as iam } from 'aws-cdk-lib';
+import * as ec2 from 'aws-cdk-lib/aws-ec2';
+import * as ssm from 'aws-cdk-lib/aws-ssm';
+import * as core from 'aws-cdk-lib';
+import { FunctionInVpc } from './utilities/lambda_aspects';
 
-export class FunctionInVPC implements cdk.IAspect {
-  private readonly privateSubnets: string[];
-  private readonly securityGroupId: string;
+// Create a list with private subnets to be used in the aspect to make all lambdas deployed in a VPC
+const privateSubnet1IdToken = ssm.StringParameter.valueForStringParameter(this, '/gts-aacb/vpc/private-subnet-1-id');
+const privateSubnet2IdToken = ssm.StringParameter.valueForStringParameter(this, '/gts-aacb/vpc/private-subnet-2-id');
+const privateSubnet3IdToken = ssm.StringParameter.valueForStringParameter(this, '/gts-aacb/vpc/private-subnet-3-id');
+const privateSubnetIds = [privateSubnet1IdToken, privateSubnet2IdToken, privateSubnet3IdToken];
 
-  constructor(privateSubnets: string[], securityGroupId: string) {
-    this.privateSubnets = privateSubnets;
-    this.securityGroupId = securityGroupId;
-  }
+// Create a Lambda Security Group where all Lambdas are in
+const lambdaSG = new ec2.SecurityGroup(this, 'LambdaSG', {
+  vpc: vpc,
+  description: 'Lambda security group',
+  allowAllOutbound: true,
+});
 
-  public visit(node: cdk.IConstruct): void {
-    if (node instanceof iam.Role) {
-      const cfnRole = node.node.tryFindChild('Resource') as iam.CfnRole;
-      const metadata = cfnRole?.getMetadata('aws:cdk:path');
-      
-      if (metadata && metadata.includes('BucketNotificationsHandler')) {
-        node.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSLambdaVPCAccessExecutionRole'));
-      }
-    }
-
-    if (node instanceof cdk.CfnResource) {
-      if (node.cfnResourceType === 'AWS::Lambda::Function') {
-        node.addPropertyOverride('VpcConfig.SecurityGroupIds', [this.securityGroupId]);
-        node.addPropertyOverride('VpcConfig.SubnetIds', this.privateSubnets);
-      }
-    }
-  }
-}
+// Add the aspect to make all Lambdas in the stack use the specified VPC and security group
+core.Aspects.of(this).add(new FunctionInVpc({
+  privateSubnets: privateSubnetIds,
+  securityGroupId: lambdaSG.securityGroupId,
+}));
