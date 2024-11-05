@@ -5,9 +5,10 @@ In this case, we’ll attach the VPC configuration to Lambda functions as requir
 
 Interface appears to adopt vistor pattern
 ```
-// Custom aspect to enforce VPC on Lambda functions
+// Custom aspect to enforce VPC on Lambda functions to traverse nodes or constructs.
 class LambdaVpcAspect implements cdk.IAspect {
 
   visit(node: IConstruct): void {
+    if (node instanceof lambda.Function) {
 
 ```
