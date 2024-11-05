@@ -1,4 +1,5 @@
-https://docs.aws.amazon.com/cdk/v2/guide/aspects.html
+CDK Aspects use the Visitor Pattern.
+
 
 Using a custom aspect, 
 you can automatically apply VPC configurations to all Lambda functions that meet certain criteria. 
@@ -13,3 +14,6 @@ class LambdaVpcAspect implements cdk.IAspect {
     if (node instanceof lambda.Function) {
 
 ```
+# References
+https://docs.aws.amazon.com/cdk/v2/guide/aspects.html
+https://aws.hashnode.com/the-power-of-aws-cdk-aspects
